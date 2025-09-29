@@ -34,22 +34,11 @@ const updateWithRating = async (
   newRatingDocument,
   review
 ) => {
-   console.log("Starting updateWithRating transaction");
-
   const restaurant = await transaction.get(docRef);
   const data = restaurant.data();
-
-  console.log("Restaurant document data:", data);
-
   const newNumRatings = data?.numRatings ? data.numRatings + 1 : 1;
   const newSumRating = (data?.sumRating || 0) + Number(review.rating);
   const newAverage = newSumRating / newNumRatings;
-
-  console.log("Calculated ratings:", {
-    newNumRatings,
-    newSumRating,
-    newAverage,
-  });
 
   transaction.update(docRef, {
     numRatings: newNumRatings,
